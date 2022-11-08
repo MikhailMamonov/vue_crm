@@ -73,6 +73,7 @@
 <script>
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength, helpers } from "@vuelidate/validators";
+import { mapActions } from "vuex";
 export default {
   name: "register-view",
   data() {
@@ -87,7 +88,8 @@ export default {
     return { v$: useVuelidate() };
   },
   methods: {
-    submitForm() {
+    ...mapActions(["REGISTER"]),
+    async submitForm() {
       this.v$.$validate();
 
       if (!this.v$.$error) {
@@ -97,8 +99,11 @@ export default {
           name: this.name,
         };
 
-        console.log(formData);
-        this.$router.push("/");
+        try {
+          await this.REGISTER(formData);
+          this.$router.push("/");
+          // eslint-disable-next-line no-empty
+        } catch (error) {}
       }
     },
   },

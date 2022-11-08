@@ -41,6 +41,7 @@
 
 <script>
 import M from "materialize-css";
+import { mapActions } from "vuex";
 export default {
   data() {
     return {
@@ -65,9 +66,11 @@ export default {
     },
   },
   methods: {
-    logout() {
+    async logout() {
+      await this.LOGOUT();
       this.$router.push("/login?message=logout");
     },
+    ...mapActions(["LOGOUT"]),
   },
   mounted() {
     this.interval = setInterval(() => {

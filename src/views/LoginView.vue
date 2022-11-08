@@ -51,7 +51,9 @@
 
 <script>
 import { useVuelidate } from "@vuelidate/core";
+import messages from "@/utils/messages";
 import { required, email, minLength, helpers } from "@vuelidate/validators";
+import { mapActions } from "vuex";
 
 export default {
   data() {
@@ -64,7 +66,8 @@ export default {
     return { v$: useVuelidate() };
   },
   methods: {
-    submitForm() {
+    ...mapActions(["LOGIN"]),
+    async submitForm() {
       this.v$.$validate(); // checks all inputs
       if (!this.v$.$error) {
         // if ANY fail validation
@@ -73,10 +76,17 @@ export default {
           password: this.password,
         };
 
-        console.log(formData);
-        this.$router.push("/");
+        try {
+          await this.LOGIN(formData);
+          this.$router.push("/");
+          // eslint-disable-next-line no-empty
+        } catch (error) {}
       }
     },
+  },
+  mounted() {
+    if (messages[this.$route.query.message])
+      this.$message(messages[this.$route.query.message]);
   },
   validations() {
     return {
