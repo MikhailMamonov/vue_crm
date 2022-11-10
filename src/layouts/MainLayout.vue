@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="app-main-layout">
+    <vLoader v-if="loading" />
+    <div class="app-main-layout" v-else>
       <v-navbar @changeIsOpen="isOpen = !isOpen"></v-navbar>
       <v-sidebar :isOpen="isOpen"></v-sidebar>
 
@@ -20,18 +21,35 @@
 </template>
 
 <script>
+import vLoader from "@/components/app/vLoader.vue";
 import vNavbar from "@/components/app/vNavbar.vue";
 import vSidebar from "@/components/app/vSidebar.vue";
+import { mapActions, mapGetters } from "vuex";
+
 export default {
   name: "main-layout",
   components: {
     vNavbar,
     vSidebar,
+    vLoader,
   },
   data() {
     return {
       isOpen: true,
+      loading: true,
     };
+  },
+  computed: {
+    ...mapGetters(["INFO"]),
+  },
+  methods: {
+    ...mapActions(["FETCH_INFO"]),
+  },
+  async mounted() {
+    if (!Object.keys(this.INFO).length) {
+      await this.$store.dispatch("FETCH_INFO");
+    }
+    this.loading = false;
   },
 };
 </script>

@@ -16,7 +16,7 @@
             data-target="dropdown"
             ref="dropdown"
           >
-            USER NAME
+            {{ name }}
             <i class="material-icons right">arrow_drop_down</i>
           </a>
 
@@ -41,7 +41,7 @@
 
 <script>
 import M from "materialize-css";
-import { mapActions } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
@@ -63,6 +63,10 @@ export default {
       return new Intl.DateTimeFormat("ru-RU", options).format(
         new Date(this.date)
       );
+    },
+    ...mapGetters(["INFO"]),
+    name() {
+      return this.INFO.name;
     },
   },
   methods: {

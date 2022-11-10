@@ -4,6 +4,8 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
+import filters from "./helpers/filters";
+
 import "materialize-css/dist/js/materialize.min";
 
 import firebase from "firebase/compat/app";
@@ -26,6 +28,8 @@ let app;
 
 firebase.auth().onAuthStateChanged(() => {
   if (!app) {
-    createApp(App).use(messagePlugin).use(store).use(router).mount("#app");
+    app = createApp(App).use(messagePlugin).use(store).use(router);
+    app.config.globalProperties.$filters = filters;
+    app.mount("#app");
   }
 });
