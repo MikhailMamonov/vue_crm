@@ -51,9 +51,9 @@
 
 <script>
 import { useVuelidate } from "@vuelidate/core";
-import messages from "@/utils/messages";
 import { required, email, minLength, helpers } from "@vuelidate/validators";
 import { mapActions } from "vuex";
+import messages from "@/utils/messages";
 
 export default {
   data() {
@@ -69,6 +69,7 @@ export default {
     ...mapActions(["LOGIN"]),
     async submitForm() {
       this.v$.$validate(); // checks all inputs
+
       if (!this.v$.$error) {
         // if ANY fail validation
         const formData = {
