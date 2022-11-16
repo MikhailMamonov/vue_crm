@@ -5,6 +5,7 @@ import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
 import filters from "./helpers/filters";
+import tooltipDirective from "./directives/tooltip.directive";
 
 import "materialize-css/dist/js/materialize.min";
 
@@ -29,6 +30,7 @@ let app;
 firebase.auth().onAuthStateChanged(() => {
   if (!app) {
     app = createApp(App).use(messagePlugin).use(store).use(router);
+    app.directive("tooltip", tooltipDirective);
     app.config.globalProperties.$filters = filters;
     app.mount("#app");
   }

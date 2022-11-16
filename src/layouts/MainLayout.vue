@@ -12,7 +12,12 @@
       </main>
 
       <div class="fixed-action-btn">
-        <router-link to="/record" class="btn-floating btn-large blue" href="#">
+        <router-link
+          to="/record"
+          class="btn-floating btn-large blue"
+          href="#"
+          v-tooltip="'Создать новую запись'"
+        >
           <i class="large material-icons">add</i>
         </router-link>
       </div>
@@ -24,6 +29,7 @@
 import vLoader from "@/components/app/vLoader.vue";
 import vNavbar from "@/components/app/vNavbar.vue";
 import vSidebar from "@/components/app/vSidebar.vue";
+import messages from "@/utils/messages";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -40,7 +46,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["INFO"]),
+    ...mapGetters(["INFO", "ERROR"]),
+  },
+  watch: {
+    error(fbError) {
+      this.$error(messages[fbError.code] || "Что-то пошло не так");
+    },
   },
   methods: {
     ...mapActions(["FETCH_INFO"]),

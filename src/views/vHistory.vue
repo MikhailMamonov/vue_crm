@@ -7,41 +7,53 @@
     <div class="history-chart">
       <canvas></canvas>
     </div>
-
-    <section>
-      <table>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Сумма</th>
-            <th>Дата</th>
-            <th>Категория</th>
-            <th>Тип</th>
-            <th>Открыть</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>1212</td>
-            <td>12.12.32</td>
-            <td>name</td>
-            <td>
-              <span class="white-text badge red">Расход</span>
-            </td>
-            <td>
-              <button class="btn-small btn">
-                <i class="material-icons">open_in_new</i>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <v-loader v-if="loading" />
+    <p v-else-if="!records.length">
+      Записей пока нет
+      <router-link to="/">Добавить новую запись</router-link>
+    </p>
+    <section v-else>
+      <v-history-table :records="records"></v-history-table>
     </section>
   </div>
 </template>
 
 <script>
-export default {};
+import vLoader from "@/components/app/vLoader.vue";
+import vHistoryTable from "@/components/vHistoryTable.vue";
+import { mapActions } from "vuex";
+
+export default {
+  name: "v-history",
+  data() {
+    return {
+      loading: true,
+      records: [],
+      categories: [],
+    };
+  },
+  components: {
+    vLoader,
+    vHistoryTable,
+  },
+  methods: {
+    ...mapActions(["FETCH_CATEGORIES", "FETCH_RECORDS"]),
+  },
+  async mounted() {
+    this.categories = await this.FETCH_CATEGORIES();
+    const records = await this.FETCH_RECORDS();
+
+    this.records = records.map((rec) => {
+      return {
+        ...rec,
+        categoryName: this.categories.find((c) => c.id === rec.categoryId)
+          .title,
+        typeClass: rec.type === "income" ? "green" : "red",
+        typeText: rec.type === "income" ? "Доход" : "Расход",
+      };
+    });
+
+    this.loading = false;
+  },
+};
 </script>

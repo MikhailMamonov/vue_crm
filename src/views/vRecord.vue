@@ -147,7 +147,7 @@ export default {
           this.description = "";
         } else {
           this.$message(
-            `Недостаточно средств на счете ${this.amount - this.INFO.bill}`
+            `Недостаточно средств на счете, доступно ${this.INFO.bill}`
           );
         }
       }

@@ -10,7 +10,7 @@ import messages from "@/utils/messages";
 
 export default {
   computed: {
-    ...mapGetters(["error"]),
+    ...mapGetters(["ERROR"]),
   },
   watch: {
     error(fbError) {
