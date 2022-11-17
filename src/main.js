@@ -12,7 +12,7 @@ import "materialize-css/dist/js/materialize.min";
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/database";
-
+import Pagination from "vuejs-paginate-next";
 console.log(firebase);
 
 firebase.initializeApp({
@@ -30,6 +30,8 @@ let app;
 firebase.auth().onAuthStateChanged(() => {
   if (!app) {
     app = createApp(App).use(messagePlugin).use(store).use(router);
+    // eslint-disable-next-line vue/multi-word-component-names
+    app.component("paginate", Pagination);
     app.directive("tooltip", tooltipDirective);
     app.config.globalProperties.$filters = filters;
     app.mount("#app");

@@ -13,7 +13,17 @@
       <router-link to="/">Добавить новую запись</router-link>
     </p>
     <section v-else>
-      <v-history-table :records="records"></v-history-table>
+      <v-history-table :records="items"></v-history-table>
+      <paginate
+        v-model="page"
+        :page-count="pageCount"
+        :page-range="pageSize"
+        :prev-text="'Назад'"
+        :next-text="'Вперед'"
+        page-class="waves-effect"
+        container-class="pagination"
+        :click-handler="handlePageChange"
+      ></paginate>
     </section>
   </div>
 </template>
@@ -21,6 +31,7 @@
 <script>
 import vLoader from "@/components/app/vLoader.vue";
 import vHistoryTable from "@/components/vHistoryTable.vue";
+import paginationMixin from "@/mixins/pagination.mixin";
 import { mapActions } from "vuex";
 
 export default {
@@ -29,29 +40,29 @@ export default {
     return {
       loading: true,
       records: [],
-      categories: [],
     };
   },
   components: {
     vLoader,
     vHistoryTable,
   },
+  mixins: [paginationMixin],
   methods: {
     ...mapActions(["FETCH_CATEGORIES", "FETCH_RECORDS"]),
   },
   async mounted() {
-    this.categories = await this.FETCH_CATEGORIES();
-    const records = await this.FETCH_RECORDS();
-
-    this.records = records.map((rec) => {
-      return {
-        ...rec,
-        categoryName: this.categories.find((c) => c.id === rec.categoryId)
-          .title,
-        typeClass: rec.type === "income" ? "green" : "red",
-        typeText: rec.type === "income" ? "Доход" : "Расход",
-      };
-    });
+    const categories = await this.FETCH_CATEGORIES();
+    this.records = await this.FETCH_RECORDS();
+    this.setupPagination(
+      this.records.map((rec) => {
+        return {
+          ...rec,
+          categoryName: categories.find((c) => c.id === rec.categoryId).title,
+          typeClass: rec.type === "income" ? "green" : "red",
+          typeText: rec.type === "income" ? "Доход" : "Расход",
+        };
+      })
+    );
 
     this.loading = false;
   },
