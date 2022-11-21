@@ -38,11 +38,27 @@ export default {
   data() {
     return {
       links: [
-        { title: "Счет", url: "/", exact: true },
-        { title: "История", url: "/history" },
-        { title: "Планирование", url: "/planning" },
-        { title: "Новая запись", url: "/record" },
-        { title: "Категории", url: "/categories" },
+        {
+          title: this.$filters.localizeFilter("Menu_Bill"),
+          url: "/",
+          exact: true,
+        },
+        {
+          title: this.$filters.localizeFilter("Menu_History"),
+          url: "/history",
+        },
+        {
+          title: this.$filters.localizeFilter("Menu_Planning"),
+          url: "/planning",
+        },
+        {
+          title: this.$filters.localizeFilter("Menu_NewRecord"),
+          url: "/record",
+        },
+        {
+          title: this.$filters.localizeFilter("Menu_Categories"),
+          url: "/categories",
+        },
       ],
     };
   },

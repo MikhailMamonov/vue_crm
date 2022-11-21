@@ -5,7 +5,9 @@
         <a href="#" @click.prevent="$emit('changeIsOpen')">
           <i class="material-icons black-text">dehaze</i>
         </a>
-        <span class="black-text">{{ dateFilter }}</span>
+        <span class="black-text">{{
+          $filters.dateFilter(date, "datetime")
+        }}</span>
       </div>
 
       <ul class="right hide-on-small-and-down">
@@ -51,19 +53,6 @@ export default {
     };
   },
   computed: {
-    dateFilter() {
-      const options = {};
-      options.year = "2-digit";
-      options.month = "long";
-      options.day = "numeric";
-      options.hour = "2-digit";
-      options.minute = "2-digit";
-      options.second = "2-digit";
-
-      return new Intl.DateTimeFormat("ru-RU", options).format(
-        new Date(this.date)
-      );
-    },
     ...mapGetters(["INFO"]),
     name() {
       return this.INFO.name;

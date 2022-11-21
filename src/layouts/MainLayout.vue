@@ -3,7 +3,7 @@
     <vLoader v-if="loading" />
     <div class="app-main-layout" v-else>
       <v-navbar @changeIsOpen="isOpen = !isOpen"></v-navbar>
-      <v-sidebar :isOpen="isOpen"></v-sidebar>
+      <v-sidebar :isOpen="isOpen" :key="locale"></v-sidebar>
 
       <main class="app-content" :class="{ full: !isOpen }">
         <div class="app-page">
@@ -47,6 +47,9 @@ export default {
   },
   computed: {
     ...mapGetters(["INFO", "ERROR"]),
+    locale() {
+      return this.INFO.locale;
+    },
   },
   watch: {
     error(fbError) {

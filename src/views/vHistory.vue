@@ -96,7 +96,6 @@ export default {
         },
       ];
 
-      console.log(this.chartData);
       this.setupPagination(
         this.records.map((rec) => {
           return {
