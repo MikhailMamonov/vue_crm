@@ -1,14 +1,27 @@
 <template>
+  <metainfo>
+    <template v-slot:title="{ content }">{{
+      content ? `${content}` : `SITE_NAME`
+    }}</template>
+  </metainfo>
   <component :is="layout">
     <router-view />
   </component>
 </template>
 
 <script>
+import { useMeta } from "vue-meta";
 import EmptyLayout from "@/layouts/EmptyLayout.vue";
 import MainLayout from "@/layouts/MainLayout.vue";
+
 export default {
   name: "App",
+  mounted() {
+    useMeta({
+      title: this.$title("ProfileTitle"),
+      htmlAttrs: { lang: "en", amp: true },
+    });
+  },
   components: {
     EmptyLayout,
     MainLayout,

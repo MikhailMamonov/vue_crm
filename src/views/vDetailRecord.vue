@@ -41,6 +41,8 @@
 <script>
 import vLoader from "@/components/app/vLoader.vue";
 import { mapActions } from "vuex";
+import { useMeta } from "vue-meta";
+
 export default {
   components: {
     vLoader,
@@ -56,6 +58,10 @@ export default {
     ...mapActions(["FETCH_RECORD_BY_ID", "FETCH_CATEGORY_BY_ID"]),
   },
   async mounted() {
+    useMeta({
+      title: this.$title("Detail_Title"),
+      htmlAttrs: { lang: "en", amp: true },
+    });
     const record = await this.FETCH_RECORD_BY_ID(this.$route.params.id);
     this.category = await this.FETCH_CATEGORY_BY_ID(record.categoryId);
     this.loading = false;

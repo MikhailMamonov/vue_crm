@@ -74,6 +74,8 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength, helpers } from "@vuelidate/validators";
 import { mapActions } from "vuex";
+import { useMeta } from "vue-meta";
+
 export default {
   name: "register-view",
   data() {
@@ -134,6 +136,12 @@ export default {
       },
       agree: { checked: (v) => v },
     };
+  },
+  mounted() {
+    useMeta({
+      title: this.$title("Register"),
+      htmlAttrs: { lang: "en", amp: true },
+    });
   },
 };
 </script>

@@ -30,7 +30,7 @@ const filters = {
       "en-US": en,
       "ru-RU": ru,
     };
-    const locale = store.getters.INFO.locale;
+    const locale = store.getters.INFO.locale || "ru-RU";
     return locales[locale][key] || `[Localize error] key is not found`;
   },
 };

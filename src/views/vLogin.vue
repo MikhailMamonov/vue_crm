@@ -1,7 +1,7 @@
 <template>
   <form class="card auth-card" @submit.prevent="submitForm()">
     <div class="card-content">
-      <span class="card-title">Домашняя бухгалтерия</span>
+      <span class="card-title">Авторизация</span>
       <div class="input-field">
         <input
           id="email"
@@ -53,6 +53,8 @@
 import { useVuelidate } from "@vuelidate/core";
 import { required, email, minLength, helpers } from "@vuelidate/validators";
 import { mapActions } from "vuex";
+import { useMeta } from "vue-meta";
+
 import messages from "@/utils/messages";
 
 export default {
@@ -86,6 +88,10 @@ export default {
     },
   },
   mounted() {
+    useMeta({
+      title: this.$title("Login"),
+      htmlAttrs: { lang: "en", amp: true },
+    });
     if (messages[this.$route.query.message])
       this.$message(messages[this.$route.query.message]);
   },

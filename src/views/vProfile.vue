@@ -41,6 +41,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 import M from "materialize-css";
+import { useMeta } from "vue-meta";
 import { useVuelidate } from "@vuelidate/core";
 import { required, helpers } from "@vuelidate/validators";
 
@@ -58,6 +59,10 @@ export default {
     ...mapGetters(["INFO"]),
   },
   mounted() {
+    useMeta({
+      title: this.$title("ProfileTitle"),
+      htmlAttrs: { lang: "en", amp: true },
+    });
     this.name = this.INFO.name;
     this.isRuLocale = this.INFO.locale === "ru-RU";
     setTimeout(() => {

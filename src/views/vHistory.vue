@@ -33,6 +33,7 @@ import vLoader from "@/components/app/vLoader.vue";
 import vHistoryTable from "@/components/vHistoryTable.vue";
 import paginationMixin from "@/mixins/pagination.mixin";
 import { mapActions } from "vuex";
+import { useMeta } from "vue-meta";
 import { Pie } from "vue-chartjs";
 import {
   Chart as ChartJS,
@@ -109,6 +110,10 @@ export default {
     },
   },
   async mounted() {
+    useMeta({
+      title: this.$title("Menu_History"),
+      htmlAttrs: { lang: "en", amp: true },
+    });
     const categories = await this.FETCH_CATEGORIES();
     this.records = await this.FETCH_RECORDS();
     this.setup(categories);

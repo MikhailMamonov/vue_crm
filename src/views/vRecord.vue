@@ -90,6 +90,7 @@ import { required, minValue, helpers } from "@vuelidate/validators";
 import vLoader from "@/components/app/vLoader.vue";
 import M from "materialize-css";
 import { mapActions, mapGetters } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
   name: "v-record",
@@ -174,6 +175,10 @@ export default {
     };
   },
   async mounted() {
+    useMeta({
+      title: this.$title("Menu_NewRecord"),
+      htmlAttrs: { lang: "en", amp: true },
+    });
     this.categories = await this.FETCH_CATEGORIES();
     this.loading = false;
 

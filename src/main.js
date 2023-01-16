@@ -1,5 +1,7 @@
 import { createApp } from "vue";
+import { createMetaManager } from "vue-meta";
 import messagePlugin from "./utils/message.plugin";
+import titlePlugin from "./utils/title.plugin";
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
@@ -13,7 +15,6 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/database";
 import Pagination from "vuejs-paginate-next";
-console.log(firebase);
 
 firebase.initializeApp({
   apiKey: "AIzaSyDE0MQNWtbyYgShPEN6oZt08dZSQ8b7sI4",
@@ -29,7 +30,12 @@ let app;
 
 firebase.auth().onAuthStateChanged(() => {
   if (!app) {
-    app = createApp(App).use(messagePlugin).use(store).use(router);
+    app = createApp(App)
+      .use(messagePlugin)
+      .use(titlePlugin)
+      .use(store)
+      .use(createMetaManager())
+      .use(router);
     // eslint-disable-next-line vue/multi-word-component-names
     app.component("paginate", Pagination);
     app.directive("tooltip", tooltipDirective);

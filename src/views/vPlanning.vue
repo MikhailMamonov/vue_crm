@@ -31,6 +31,7 @@
 <script>
 import vLoader from "@/components/app/vLoader.vue";
 import { mapActions } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
   name: "v-planning",
@@ -47,6 +48,10 @@ export default {
     ...mapActions(["FETCH_CATEGORIES", "FETCH_RECORDS"]),
   },
   async mounted() {
+    useMeta({
+      title: this.$title("Menu_Planning"),
+      htmlAttrs: { lang: "en", amp: true },
+    });
     const categoires = await this.FETCH_CATEGORIES();
     const records = await this.FETCH_RECORDS();
 

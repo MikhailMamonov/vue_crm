@@ -3,8 +3,11 @@
     "Update":"Update",
     "Menu_Bill":"Bill",
     "Name": "Name",
+     "Detail_Title": "Detail",
     "Menu_History":"History",
     "Menu_Planning":"Planning",
     "Menu_NewRecord":"NewRecord",
-    "Menu_Categories":"Categories"
+    "Menu_Categories":"Categories",
+    "Register": "Register",
+    "Login": "Login"
 }

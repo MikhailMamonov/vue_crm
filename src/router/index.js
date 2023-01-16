@@ -1,6 +1,8 @@
-import { createRouter, createWebHistory } from "vue-router";
-import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
+
+import { createRouter, createWebHistory } from "vue-router";
+
+import firebase from "firebase/compat/app";
 
 const routes = [
   {
@@ -59,6 +61,7 @@ const routes = [
   },
 ];
 
+console.log(process.env.BASE_URL);
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,

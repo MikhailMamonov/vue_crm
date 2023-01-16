@@ -23,6 +23,7 @@ import vLoader from "@/components/app/vLoader.vue";
 import vHomeBill from "@/components/vHomeBill.vue";
 import vHomeCurrency from "@/components/vHomeCurrency.vue";
 import { mapActions } from "vuex";
+import { useMeta } from "vue-meta";
 
 export default {
   data() {
@@ -42,6 +43,10 @@ export default {
     },
   },
   async mounted() {
+    useMeta({
+      title: this.$title("Menu_Bill"),
+      htmlAttrs: { lang: "en", amp: true },
+    });
     this.currency = await this.FETCH_CURRENCY();
     this.loading = false;
   },

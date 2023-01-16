@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import { useMeta } from "vue-meta";
 import vLoader from "@/components/app/vLoader.vue";
 import vCategoryCreate from "@/components/category/vCategoryCreate.vue";
 import vCategoryEdit from "@/components/category/vCategoryEdit.vue";
@@ -51,6 +52,10 @@ export default {
     },
   },
   async mounted() {
+    useMeta({
+      title: this.$title("Menu_Categories"),
+      htmlAttrs: { lang: "en", amp: true },
+    });
     this.categories = await this.FETCH_CATEGORIES();
     this.loading = false;
   },
